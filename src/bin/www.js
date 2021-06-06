@@ -5,13 +5,11 @@
  * Module dependencies.
  */
 
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import { createServer } from 'http';
 
 import app from '../app';
 
-const debug = require('debug')('expressjs-mongodb:server');
+const debug = require('debug')('facebook-parody:server');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -85,32 +83,6 @@ function onListening() {
     : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
 }
-
-const terminate = (serverApp, options = { coredump: false, timeout: 500 }) => {
-  // Exit function
-  const exit = (code) => {
-    if (options.coredump) return process.abort();
-    return process.exit(code);
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  return (code, reason) => (err, promise) => {
-    if (err && err instanceof Error) {
-      // Log error information, use a proper logging library here :)
-      console.error(err.name, err.message, err.stack);
-    }
-
-    // Attempt a graceful shutdown
-    serverApp.close(exit);
-    setTimeout(exit, options.timeout).unref();
-  };
-};
-
-const exitHandler = terminate(server, {
-  coredump: false,
-  timeout: 500,
-});
-
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -118,8 +90,3 @@ const exitHandler = terminate(server, {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-process.on('uncaughtException', exitHandler(1, 'Unexpected Error'));
-process.on('unhandledRejection', exitHandler(1, 'Unhandled Promise'));
-process.on('SIGTERM', exitHandler(0, 'SIGTERM'));
-process.on('SIGINT', exitHandler(0, 'SIGINT'));

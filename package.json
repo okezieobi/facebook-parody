@@ -1,27 +1,28 @@
 {
-  "name": "expressjs-mongodb",
+  "name": "facebook-parody",
   "version": "0.0.0",
+  "engines": {
+    "node": "12.x"
+  },
   "private": true,
   "main": "jest.config.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "dev": "NODE_ENV=development DEBUG=expressjs-mongodb:* nodemon --exec babel-node src/bin/www.js",
+    "dev": "NODE_ENV=development DEBUG=facebook-parody:* nodemon --exec babel-node src/bin/www.js",
     "release": "npm run clean && npm run build-app && npm run start",
     "clean": "rm -rf dist && mkdir dist",
     "build": "npm run clean && npm run build-app",
-    "build-app": "babel src -s -d dist --presets=@babel/env",
+    "build-app": "babel src -s -d dist",
     "start": "node dist/bin/www.js",
     "test": "NODE_ENV=test jest src/tests/index.test.js",
     "coverage": "npm run test -- '--coverage'",
-    "coverage:coveralls": "npm run coverage && coveralls < coverage/lcov.info",
     "coverage:codacy": "npm run coverage && cp -R coverage .github/workflows/coverage/"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
-    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
@@ -30,7 +31,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.8",
     "morgan": "~1.9.1",
-    "regenerator-runtime": "^0.13.7",
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.4"
   },
