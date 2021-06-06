@@ -8,9 +8,7 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/af1d227f0a6d4b5fbd239bbed45d3362)](https://www.codacy.com/gh/okezieobi/expressjs-mongodb/dashboard?utm_source=github.com&utm_medium=referral&utm_content=okezieobi/expressjs-mongodb&utm_campaign=Badge_Coverage)
 
-[![Build Status](https://travis-ci.com/okezieobi/expressjs-mongodb.svg?branch=main)](https://travis-ci.com/okezieobi/expressjs-mongodb)
-
-[![Coverage Status](https://coveralls.io/repos/github/okezieobi/expressjs-mongodb/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/expressjs-mongodb?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/okezieobi/facebook-parody/badge.svg?branch=main)](https://coveralls.io/github/okezieobi/facebook-parody?branch=main)
 
 ## Stack
 

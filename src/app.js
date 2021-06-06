@@ -17,6 +17,8 @@ app.use('/api-docs', swaggerSpec.serve, swaggerSpec.setup);
 
 app.use('/api/v1', routes(Router));
 
+app.get('', (req, res) => { res.redirect('/api-docs'); });
+
 // eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
   if (error.status) res.status(error.status).send({ error: error.message });

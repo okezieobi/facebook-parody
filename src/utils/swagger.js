@@ -11,9 +11,9 @@ const servers = process.env.NODE_ENV === 'production'
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'Template REST API', // Title of the documentation
+    title: 'Facebook parody REST API', // Title of the documentation
     version: '1.0.0', // Version of the app
-    description: 'REST API for template app', // short description of the app
+    description: 'REST API for a Facebook parody app', // short description of the app
   },
   servers,
   components: {
