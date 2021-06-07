@@ -5,7 +5,7 @@ import app from '../app';
 import utils from './utils';
 
 describe('User should be able to signup to the app', () => {
-  it('Should create a User at "/api/v1/auth/signup" with POST if all request inputs are valid', async () => {
+  it('Should create a User at "/api/v1/auth/signup" if all request inputs are valid', async () => {
     const { status, body: { data } } = await request(app).post('/api/v1/auth/signup').send(utils.newUser);
     expect(status).toBeNumber().toEqual(201);
     expect(data).toBeObject().toContainKeys(['user']);
