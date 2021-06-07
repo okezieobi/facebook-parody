@@ -1,2 +1,2 @@
-// import './user.test';
+import './user.test';
 import './post.test';

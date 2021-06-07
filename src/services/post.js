@@ -18,11 +18,6 @@ export default class PostServices {
     return this.model.find(filter, 'id title body createdAt updatedAt', { sort: '-createdAt' }).lean();
   }
 
-  async getAllByOwner(user) {
-    const posts = await this.getAll({ _id: { $in: user.posts } });
-    return posts;
-  }
-
   async verifyOne(id) {
     const post = await this.model.findById(id);
     if (post === null) throw new this.CustomError(404, 'Post not found');

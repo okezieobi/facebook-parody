@@ -3,7 +3,16 @@ paths:
     get:                 # endpoint request type (post request)
       tags:               # Tag property
         - Post            # Value of the tag
-      summary: gets all posts as an authorized user
+      summary: gets posts as an authorized user
+      parameters:
+        - name: owner
+          in: query
+          description: gets associated post if true.
+          schema:
+            type: boolean
+            enum:
+              - true
+              - false
       security:
        - cookieAuth: []
       responses:          # server responses
