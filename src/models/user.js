@@ -6,11 +6,6 @@ export default (Schema) => {
       type: String,
       required: true,
     },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     email: {
       type: String,
       required: true,
@@ -25,6 +20,7 @@ export default (Schema) => {
       enum: ['Client', 'Admin'],
       default: 'Client',
     },
+    posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   }, { timestamps: true });
 
   schema.pre('save', function encryptPassword(next) {

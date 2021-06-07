@@ -2,12 +2,12 @@
 import mongoose, { Schema, model } from 'mongoose';
 
 import userSchema from './user';
-import entitySchema from './entity';
+import postSchema from './post';
 import env from '../utils/env';
 
 const models = {
   User: model('User', userSchema(Schema)),
-  Entity: model('Entity', entitySchema(Schema)),
+  Post: model('Post', postSchema(Schema)),
 };
 mongoose.connect(env.databaseURL,
   {

@@ -1,0 +1,36 @@
+paths:
+  /posts:                # path of the user from your endpoint
+    post:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Post            # Value of the tag
+      summary: creates a post as an authorized user
+      security:
+       - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-post'
+            example:
+              title: 'I am a title'
+              body: 'I am a body'
+      responses:          # server responses
+        201:
+          description: An object with post details
+        401:
+          description: Error message object in error property of response body
+        400:
+          description: Error messages array in error property of response body
+components:        # Schema definition for request body
+ schemas:
+  create-post:
+    type: object
+    properties:
+          title:
+            type: string
+          body:
+            type: string
+    required:
+      - title
+      - body

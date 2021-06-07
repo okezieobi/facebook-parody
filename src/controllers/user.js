@@ -7,26 +7,32 @@ export default class UserController {
     this.signup = this.signup.bind(this);
     this.authJWT = this.authJWT.bind(this);
     this.handleServices = handleServices;
-    this.setJWT = async (req, res, next) => {
-      res.locals.data.token = await jwt.generate(res.locals.data.user);
+    this.setJWT = (req, res, next) => {
+      res.locals.user.token = jwt.generate(res.locals.user);
       next();
     };
   }
 
   signup({ body }, res, next) {
-    return this.handleServices(this.service, 'create', body, res, next);
+    return this.handleServices({
+      service: this.service, method: 'create', input: body, res, next, data: 'user',
+    });
   }
 
   login({ body }, res, next) {
-    return this.handleServices(this.service, 'auth', body, res, next);
+    return this.handleServices({
+      service: this.service, method: 'auth', input: body, res, next, data: 'user',
+    });
   }
 
   async authJWT({ headers }, res, next) {
-    const decoded = await jwt.verify(headers).catch((err) => {
-      if (process.env.NODE_ENV === 'development') throw err;
-      else next({ status: 401, message: err.message });
-    });
-    res.locals.user = await this.service.authJWT(decoded).catch(next);
-    next();
+    jwt.verify(headers)
+      .then((decoded) => this.handleServices({
+        service: this.service, method: 'authJWT', res, next, data: 'user', input: decoded,
+      }))
+      .catch((err) => {
+        if (process.env.NODE_ENV === 'development') next(err);
+        else next({ status: 401, message: err.message });
+      });
   }
 }

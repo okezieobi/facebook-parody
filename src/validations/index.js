@@ -1,7 +1,9 @@
-import { validationResult, checkSchema } from 'express-validator';
+import {
+  validationResult, body, header, param,
+} from 'express-validator';
 
-import userSchema from './user';
-import entitySchema from './entity';
+import userValidation from './user';
+import postValidation from './post';
 
 const handleValidationErr = (status = 400) => (req, res, next) => {
   const errors = validationResult(req);
@@ -9,15 +11,21 @@ const handleValidationErr = (status = 400) => (req, res, next) => {
   else next({ message: errors.array(), status });
 };
 
+const validateUser = userValidation(body, header);
+const validatePost = postValidation(body, param);
 
 export default {
   user: {
-    signup: [checkSchema({ ...userSchema.validateSignup, ...userSchema.validatePassword}), handleValidationErr()],
-    login: [checkSchema({...userSchema.validateLogin, ...userSchema.validatePassword}), handleValidationErr()],
-    jwt: [checkSchema({...userSchema.validateJWT}), handleValidationErr(401)],
+    signup: [...Object.values(validateUser.body.create),
+      handleValidationErr()],
+    login: [...Object.entries(validateUser.body.create)
+      .filter(([key]) => key === 'email' || key === 'password')
+      .map((array) => array[1]),
+    handleValidationErr()],
+    jwt: [validateUser.header.jwt, handleValidationErr(401)],
   },
-  entity: {
-    create: [checkSchema({...entitySchema.validateInput}), handleValidationErr()],
-    id: [checkSchema({ ...entitySchema.validateEntryId}), handleValidationErr()],
+  post: {
+    create: [...Object.values(validatePost.body.create), handleValidationErr()],
+    id: [validatePost.param.id, handleValidationErr()],
   },
 };

@@ -21,7 +21,7 @@ app.get('', (req, res) => { res.redirect('/api-docs'); });
 
 // eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
-  if (error.status) res.status(error.status).send({ error: error.message });
+  if (error.status) res.status(error.status).send({ error: { 'message(s)': error.message } });
   else throw error;
 });
 

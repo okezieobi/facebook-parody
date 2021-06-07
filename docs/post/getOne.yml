@@ -1,0 +1,22 @@
+paths:
+  /posts/{postId}:                # path of the user from your endpoint
+    get:                 # endpoint request type (post request)
+      tags:               # Tag property
+        - Post            # Value of the tag
+      summary: gets a specific post as an authorized user
+      security:
+       - cookieAuth: []
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: The MongoDB id of post to be retrieved.
+          schema:
+            type: string
+      responses:          # server responses
+        200:
+          description: An object with post details
+        401:
+          description: Error message object in error property of response body
+        404:
+          description: Error message object in error property of response body

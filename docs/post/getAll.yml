@@ -1,13 +1,13 @@
 paths:
-  /entities/:                # path of the user from your endpoint
+  /posts:                # path of the user from your endpoint
     get:                 # endpoint request type (post request)
       tags:               # Tag property
-        - Entry            # Value of the tag
-      summary: gets all associated entities of an authenticated user
+        - Post            # Value of the tag
+      summary: gets all posts as an authorized user
       security:
        - cookieAuth: []
       responses:          # server responses
         200:
-          description: An object with an array entities
+          description: An object with an array posts
         401:
           description: Error message object in error property of response body

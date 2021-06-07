@@ -13,7 +13,6 @@ paths:
             example:
               fullName: 'full name example'
               email: 'example@email.io'
-              username: 'username-example'
               password: 'password-example'
       responses:          # server responses
         201:
@@ -35,8 +34,6 @@ components:        # Schema definition for request body
           fullName:
             type: string
           email:
-            type: string
-          username:
             type: string
           password:
             type: string

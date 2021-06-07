@@ -11,7 +11,7 @@ paths:
             schema:
               $ref: '#/components/schemas/login'
             example:
-              user: 'username-example'
+              email: 'example@email.io'
               password: 'password-example'
       responses:          # server responses
          200:
@@ -32,10 +32,10 @@ components:        # Schema definition for request body
   login:
     type: object
     properties:
-          user:
+          email:
             type: string
           password:
             type: string
     required:
-      - user
+      - email
       - password
