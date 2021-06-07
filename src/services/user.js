@@ -11,7 +11,7 @@ export default class UserServices {
     await this.model.create(arg);
     const user = await this.model
       .findOne({ email: arg.email },
-        '_id fullName email type createdAt').lean();
+        '_id fullName email posts type createdAt').lean();
     return { ...user, status: 201 };
   }
 
@@ -23,7 +23,7 @@ export default class UserServices {
     if (!verifyPassword) throw new this.CustomError(401, 'Password provided does not match user, please try again with the correct password');
     const user = await this.model
       .findOne({ email: userExists.email },
-        '_id fullName email type createdAt updatedAt').lean();
+        '_id fullName email type posts createdAt updatedAt').populate('posts').lean();
     return user;
   }
 
