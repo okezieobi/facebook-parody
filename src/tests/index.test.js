@@ -1,2 +1,2 @@
-import './user.test';
-// import './entity.test';
+// import './user.test';
+import './post.test';
