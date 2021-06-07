@@ -192,4 +192,57 @@ describe('Authorized User can update an associated, specific post by its id at "
     expect(error).toBeObject().toContainKeys(['message(s)']);
     expect(error['message(s)']).toBeString().toEqual('Post not found');
   });
+
+  it('Should NOT update associated, specific post at at "/api/v1/posts/:id" if user does not own post', async () => {
+    const { status, body: { error } } = await request(app).put(`/api/v1/posts/${utils.seed.postDoc._id}`)
+      .set('token', utils.secondToken).send(utils.newPost);
+    expect(status).toBeNumber().toEqual(406);
+    expect(error).toBeObject().toContainKeys(['message(s)']);
+    expect(error['message(s)']).toBeString().toEqual('Post can only be updated by owner');
+  });
+});
+
+describe('Authorized user can delete an associated, specific post at "/api/v1/posts/:id"', () => {
+  it('Should NOT delete associated, specific post at at "/api/v1/posts/:id" if user does not own post', async () => {
+    const { status, body: { error } } = await request(app).delete(`/api/v1/posts/${utils.seed.postDoc._id}`)
+      .set('token', utils.secondToken);
+    expect(status).toBeNumber().toEqual(406);
+    expect(error).toBeObject().toContainKeys(['message(s)']);
+    expect(error['message(s)']).toBeString().toEqual('Post can only be deleted by owner');
+  });
+
+  it('Should NOT delete associated, specific post at at "/api/v1/posts/:id" if post is not found', async () => {
+    const { status, body: { error } } = await request(app).delete(`/api/v1/posts/${utils.seed.userDoc._id}`)
+      .set('token', utils.token);
+    expect(status).toBeNumber().toEqual(404);
+    expect(error).toBeObject().toContainKeys(['message(s)']);
+    expect(error['message(s)']).toBeString().toEqual('Post not found');
+  });
+
+  it('Should NOT delete associated, specific post at at "/api/v1/posts/:id" if User is not authorized', async () => {
+    const { status, body: { error } } = await request(app).delete(`/api/v1/posts/${utils.seed.postDoc._id}`)
+      .set('token', utils.token401);
+    expect(status).toBeNumber().toEqual(401);
+    expect(error).toBeObject().toContainKeys(['message(s)']);
+    expect(error['message(s)']).toBeString().toEqual('User not found, please sign up by creating an account or sign in');
+  });
+
+  it('Should NOT delete associated, specific post at "/api/v1/posts/:id" if token is falsy', async () => {
+    const { status, body: { error } } = await request(app).delete(`/api/v1/posts/${utils.seed.postDoc._id}`);
+    expect(status).toBeNumber().toEqual(401);
+    expect(error).toBeObject().toContainKeys(['message(s)']);
+    expect(error['message(s)']).toBeArray().toIncludeAllMembers([
+      {
+        msg: 'Token does not match Json Web Token format',
+        param: 'token',
+        location: 'headers',
+      },
+    ]);
+  });
+
+  it('Should delete an associated post at "/api/v1/posts/:id" if input values are valid', async () => {
+    const { status } = await request(app).delete(`/api/v1/posts/${utils.seed.postDoc._id}`)
+      .set('token', utils.token);
+    expect(status).toBeNumber().toEqual(204);
+  });
 });

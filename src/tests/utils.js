@@ -16,6 +16,7 @@ const secondUser = {
 };
 const userDoc = new models.User(user);
 const secondUserDoc = new models.User(secondUser);
+const secondToken = jwt.generate(secondUserDoc);
 const token = jwt.generate(userDoc);
 const user404 = {
   fullName: 'test-fullName-fake', email: 'test-fake@email.com', password: 'test-password',
@@ -31,6 +32,7 @@ export default {
   seed: { userDoc, postDoc, secondUserDoc },
   token,
   user,
+  secondToken,
   post,
   newPost,
   newUser,
