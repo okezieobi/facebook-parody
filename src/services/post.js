@@ -14,8 +14,12 @@ export default class PostServices {
     return { ...post._doc, status: 201 };
   }
 
-  async getAll(filter = {}) {
-    return this.model.find(filter, 'id title body createdAt updatedAt', { sort: '-createdAt' }).lean();
+  async getAll({ user, owner }) {
+    let input;
+    if (owner) {
+      input = { _id: { $in: user.posts } };
+    } else input = {};
+    return this.model.find(input, 'id title body createdAt updatedAt', { sort: '-createdAt' }).lean();
   }
 
   async verifyOne(id) {

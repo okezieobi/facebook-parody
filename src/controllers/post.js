@@ -22,12 +22,12 @@ export default class PostController {
   }
 
   findAll({ query: { owner } }, res, next) {
-    let input;
-    if (owner) {
-      input = { _id: { $in: res.locals.user.posts } };
-    } else input = {};
+    const arg = {
+      user: res.locals.user,
+      owner,
+    };
     return this.handleServices({
-      service: this.service, method: 'getAll', input, res, next, data: 'posts',
+      service: this.service, method: 'getAll', input: arg, res, next, data: 'posts',
     });
   }
 
