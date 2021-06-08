@@ -22,3 +22,4 @@ ExpressJS/NodeJS, MongoDB/Mongoose, Jest
 - Clone repo and create an .env file in repo root with the following secrets: TEST_DATABASE_URL, DEV_DATABASE_URL, JWT_SECRET. TEST_DATABASE_URL and DEV_DATABASE_URL should obviously be MongoDB connection string in the format of "mongodb://localhost/your-database-name", JWT_SECRET can be any value
 - Open repo at root location in terminal/command line and run 'npm i' to install project dependencies
 - Run 'npm run dev' to start app in development mode or 'npm build' then 'npm start' to start app in production/staging mode
+- Navigate to <http://localhost:5000> to view and use Swagger documentation
