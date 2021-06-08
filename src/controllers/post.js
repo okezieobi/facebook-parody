@@ -43,14 +43,11 @@ export default class PostController {
     });
   }
 
-  updateOne({ body: { title, body } }, res, next) {
+  updateOne({ body }, res, next) {
     const arg = {
       user: res.locals.user,
       post: res.locals.post,
-      input: {
-        title: title || res.locals.post.title,
-        body: body || res.locals.post.body,
-      },
+      input: body,
     };
     return this.handleServices({
       service: this.service, method: 'updateOne', input: arg, res, next, data: 'post',
